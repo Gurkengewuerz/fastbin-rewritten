@@ -1,7 +1,7 @@
 # Build stage
 FROM node:lts-alpine AS builder
 
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
 
@@ -30,7 +30,6 @@ RUN apk add --no-cache yarn
 
 # Copy necessary files from builder
 COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
@@ -38,9 +37,9 @@ COPY --from=builder /app/.next/static ./.next/static
 EXPOSE 3000
 
 # Set environment variables
-ENV NEXT_TELEMETRY_DISABLED 1
-ENV NODE_ENV production
-ENV PORT 3000
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+ENV PORT=3000
 
 # Command to run the application
 CMD ["node", "server.js"]
