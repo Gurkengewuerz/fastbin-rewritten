@@ -24,7 +24,9 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
   };
 
   const [uploading, setUploading] = useState(false);
-  const [documentContents, setDocumentContents] = useState(contents ?? '');
+
+  const documentContents = useRef(contents ?? '');
+  const setDocumentContents = (c: string) => documentContents.current = c;
 
   const [toasts, setToast] = useToasts();
   const router = useRouter();
@@ -37,7 +39,7 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
     setUploading(true);
     try {
       const { key, secret } = await upload(
-        documentContents,
+        documentContents.current,
         documentLanguageRef.current,
       );
 
@@ -98,7 +100,7 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
       setDocumentLanguage={setDocumentLanguage}
     >
       <Editor
-        contents={documentContents}
+        contents={documentContents.current}
         setContents={setDocumentContents}
         language={documentLanguage}
       />
