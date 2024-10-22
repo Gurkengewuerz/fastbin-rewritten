@@ -23,7 +23,7 @@ const Fastbin = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <GeistProvider theme={{ type: 'dark' }}>
+    <GeistProvider themeType={'dark'}>
       <CssBaseline />
       <Component {...pageProps} />
       <Umami />
