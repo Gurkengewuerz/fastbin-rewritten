@@ -74,7 +74,7 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
     let mounted = true;
     globalKeyBind(Mousetrap);
 
-    Mousetrap.bindGlobal('ctrl+s', e => {
+    (Mousetrap as any).bindGlobal('ctrl+s', e => {
       e.preventDefault();
       if (mounted) {
         save();

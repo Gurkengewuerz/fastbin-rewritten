@@ -3,54 +3,109 @@ import {
   randomBytes,
   createCipheriv,
   createDecipheriv,
-  CipherGCMTypes,
-  Utf8AsciiBinaryEncoding,
-  HexBase64BinaryEncoding
-} from 'crypto';
+  BinaryToTextEncoding,
+  Encoding,
+} from 'node:crypto';
 
-const algo: CipherGCMTypes = 'aes-256-gcm';
-const inputEncoding: Utf8AsciiBinaryEncoding = 'utf8';
-const outputEncoding: HexBase64BinaryEncoding = 'hex';
+// Modern type definitions
+type Algorithm = 'aes-256-gcm';
+type InputEncoding = Encoding;
+type OutputEncoding = BinaryToTextEncoding;
 
-const byteLength = 16;
+interface EncryptedData {
+  iv: string;
+  authTag: string;
+  content: string;
+}
 
-const key = env('server-secret');
+// Constants
+const ALGORITHM: Algorithm = 'aes-256-gcm';
+const INPUT_ENCODING: InputEncoding = 'utf8';
+const OUTPUT_ENCODING: OutputEncoding = 'hex';
+const BYTE_LENGTH = 16;
 
+// Get encryption key from environment
+const KEY = env('server-secret');
+
+/**
+ * Encrypts data with a given key
+ * @param k - Key for the data object
+ * @param input - Data to encrypt
+ * @returns Encrypted data string
+ */
 const encrypt = (k: string, input: string): string => {
-  const iv = randomBytes(byteLength);
+  try {
+    // Generate initialization vector
+    const iv = randomBytes(BYTE_LENGTH);
 
-  const cipher = createCipheriv(algo, key, iv);
-  const text = JSON.stringify({
-    [`${k}`]: input
-  });
+    // Create cipher instance
+    const cipher = createCipheriv(ALGORITHM, KEY, iv);
 
-  let result = cipher.update(text, inputEncoding, outputEncoding);
-  result += cipher.final(outputEncoding);
+    // Prepare data
+    const data = JSON.stringify({ [k]: input });
 
-  const authTag = cipher.getAuthTag();
+    // Encrypt data
+    const encryptedContent = Buffer.concat([
+      cipher.update(data, INPUT_ENCODING),
+      cipher.final(),
+    ]);
 
-  return iv.toString(outputEncoding) + authTag.toString(outputEncoding) + result;
-};
+    // Get authentication tag
+    const authTag = cipher.getAuthTag();
 
-const decrypt = (k: string, secret: string): string => {
-  const iv = secret.slice(0, 2 * byteLength);
-  const authtag = secret.slice(2 * byteLength, 4 * byteLength);
-  const encrypted = secret.slice(4 * byteLength);
+    // Combine all components
+    const result: EncryptedData = {
+      iv: iv.toString(OUTPUT_ENCODING),
+      authTag: authTag.toString(OUTPUT_ENCODING),
+      content: encryptedContent.toString(OUTPUT_ENCODING),
+    };
 
-  if (!iv || !encrypted) {
-    throw new Error('Invalid secret.');
+    // Return concatenated string
+    return Object.values(result).join('');
+  } catch (error) {
+    throw new Error(`Encryption failed: ${(error as Error).message}`);
   }
-
-  const decipher = createDecipheriv(algo, key, Buffer.from(iv, outputEncoding));
-  decipher.setAuthTag(Buffer.from(authtag, outputEncoding));
-
-  let result = decipher.update(Buffer.from(encrypted, outputEncoding), outputEncoding, inputEncoding);
-  result += decipher.final(inputEncoding);
-
-  return JSON.parse(result)[k];
 };
 
-export {
-  encrypt,
-  decrypt
+/**
+ * Decrypts data with a given key
+ * @param k - Key for the data object
+ * @param secret - Encrypted data string
+ * @returns Decrypted data
+ */
+const decrypt = (k: string, secret: string): string => {
+  try {
+    // Extract components
+    const iv = secret.slice(0, 2 * BYTE_LENGTH);
+    const authTag = secret.slice(2 * BYTE_LENGTH, 4 * BYTE_LENGTH);
+    const encrypted = secret.slice(4 * BYTE_LENGTH);
+
+    // Validate input
+    if (!iv || !encrypted || !authTag) {
+      throw new Error('Invalid encrypted data format');
+    }
+
+    // Create decipher instance
+    const decipher = createDecipheriv(
+      ALGORITHM,
+      KEY,
+      Buffer.from(iv, OUTPUT_ENCODING),
+    );
+
+    // Set auth tag
+    decipher.setAuthTag(Buffer.from(authTag, OUTPUT_ENCODING));
+
+    // Decrypt data
+    const decrypted = Buffer.concat([
+      decipher.update(Buffer.from(encrypted, OUTPUT_ENCODING)),
+      decipher.final(),
+    ]);
+
+    // Parse and return result
+    return JSON.parse(decrypted.toString(INPUT_ENCODING))[k];
+  } catch (error) {
+    throw new Error(`Decryption failed: ${(error as Error).message}`);
+  }
 };
+
+export { encrypt, decrypt };

@@ -7,6 +7,18 @@ module.exports = {
     ]
   },
 
+  experimental: {
+    turbo: {
+      rules: {
+        "*.scss": {
+          loaders: ["sass-loader"],
+          as: "*.css",
+        },
+      },
+    },
+  },
+
+
   async rewrites() {
     return [
       {

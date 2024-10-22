@@ -1,6 +1,6 @@
 import css from './TheHeader.module.scss';
 
-import { Col, Row, Select, Tooltip } from '@geist-ui/react';
+import { Grid, Select, Tooltip } from '@geist-ui/react';
 import { FilePlus, Icon, Info } from '@geist-ui/react-icons';
 import Link from 'next/link';
 
@@ -28,25 +28,29 @@ const TheHeader = ({
   items,
   displayLanguages,
   documentLanguage,
-  setDocumentLanguage
+  setDocumentLanguage,
 }: TheHeaderProps) => {
   const navigationItems = [
     {
       url: '/',
       tooltip: 'New (ctrl+i)',
-      icon: FilePlus
+      icon: FilePlus,
     },
     {
       url: '/about',
       tooltip: 'About',
-      icon: Info
+      icon: Info,
     },
 
-    ...items
+    ...items,
   ];
 
-  const [ headerClasses, setHeaderClasses ] = useState([ css.wrapper, css.mobileHeader ].join(' '));
-  const [ tooltipPlacement, setTooltipPlacement ] = useState<'bottom' | 'top'>('bottom');
+  const [headerClasses, setHeaderClasses] = useState(
+    [css.wrapper, css.mobileHeader].join(' '),
+  );
+  const [tooltipPlacement, setTooltipPlacement] = useState<'bottom' | 'top'>(
+    'bottom',
+  );
 
   useEffect(() => {
     const isMobile = checkMobile(window.navigator).any;
@@ -60,52 +64,67 @@ const TheHeader = ({
 
   return (
     <header className={headerClasses}>
-      <Row align="middle" justify="space-between" style={{ height: '65px' }}>
-        <Col style={{ width: 'auto' }} className={css.sitename}>
-          <h1>fastbin<sup><small><strong>v2</strong></small></sup></h1>
-        </Col>
-
-        <Col className={css.navigationWrapper}>
-          <Row align="middle" gap={.8}>
+      <Grid.Container justify="space-between" height="65px">
+        <Grid align="middle" xs={12} className={css.sitename}>
+          <h1>
+            fastbin
+            <sup>
+              <small>
+                <strong>v2</strong>
+              </small>
+            </sup>
+          </h1>
+        </Grid>
+        <Grid xs={12} className={css.navigationWrapper}>
+          <Grid.Container justify="end" gap={0.8}>
             {displayLanguages && (
-              <Col className={css.languageRow}>
-                <Select initialValue={documentLanguage || 'plain'} onChange={setDocumentLanguage}>
-                  {Object.keys(languages).map(id => {
+              <Grid xs={6} className={css.languageRow}>
+                <Select
+                  initialValue={documentLanguage || 'plain'}
+                  onChange={setDocumentLanguage}
+                >
+                  {Object.keys(languages).map((id) => {
                     const language = languages[id];
 
                     return (
-                      <Select.Option
-                        value={language.id}
-                        key={id}
-                      >
+                      <Select.Option value={language.id} key={id}>
                         {language.name}
                       </Select.Option>
                     );
                   })}
                 </Select>
-              </Col>
+              </Grid>
             )}
 
-            <Col>
+            <Grid xs={6}>
               {navigationItems.map((item, idx) => (
-                <Tooltip key={idx} text={item.tooltip} placement={tooltipPlacement} className={css.navItem}>
-                  {item.url && !item.external && <Link href={item.url}>
-                    <a>
+                <Tooltip
+                  key={idx}
+                  text={item.tooltip}
+                  placement={tooltipPlacement}
+                  className={css.navItem}
+                >
+                  {item.url && !item.external && (
+                    <Link href={item.url}>
+                        <item.icon size={36} />
+                    </Link>
+                  )}
+
+                  {item.url && item.external && (
+                    <Link href={item.url}>
                       <item.icon size={36} />
-                    </a>
-                  </Link>}
+                    </Link>
+                  )}
 
-                  {item.url && item.external && <a href={item.url}>
-                    <item.icon size={36} />
-                  </a>}
-
-                  {item.onClick && <item.icon onClick={item.onClick} size={36} />}
+                  {item.onClick && (
+                    <item.icon onClick={item.onClick} size={36} />
+                  )}
                 </Tooltip>
               ))}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+            </Grid>
+          </Grid.Container>
+        </Grid>
+      </Grid.Container>
     </header>
   );
 };

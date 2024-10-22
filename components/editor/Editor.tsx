@@ -1,4 +1,4 @@
-import { ControlledEditor } from '@monaco-editor/react';
+import MonacoEditor  from '@monaco-editor/react';
 import checkMobile from 'ismobilejs';
 import { useState, useEffect } from 'react';
 import MobileEditor from './MobileEditor';
@@ -39,12 +39,12 @@ const Editor = ({ contents, readOnly, language, setContents }: EditorOpts) => {
   }
 
   return (
-    <ControlledEditor
+    <MonacoEditor 
       language={language}
       value={contents}
       onChange={handleEditorChange}
-      theme="dark"
-      wrapperClassName="editor"
+      theme="vs-dark"
+      className="editor"
       options={editorOptions}
     />
   );

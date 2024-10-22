@@ -45,12 +45,12 @@ const DocumentPage = ({ contents, finalKey, originalKey, languageId, secret }: D
   useEffect(() => {
     globalKeyBind(Mousetrap);
 
-    Mousetrap.bindGlobal('ctrl+shift+c', e => {
+    (Mousetrap as any).bindGlobal('ctrl+shift+c', e => {
       e.preventDefault();
       router.push(`/clone/${originalKey}`);
     });
 
-    Mousetrap.bindGlobal('ctrl+shift+r', e => {
+    (Mousetrap as any).bindGlobal('ctrl+shift+r', e => {
       e.preventDefault();
       window.location.href = `/raw/${finalKey}`;
     });
