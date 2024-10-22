@@ -15,6 +15,10 @@ const Editor = ({ contents, readOnly, language, setContents }: EditorOpts) => {
     fontFamily: '"Fira Code", "Consolas", "Courier New", monospace',
     fontLigatures: true,
     lineHeight: 22,
+    selectOnLineNumbers: true,
+    roundedSelection: false,
+    wordWrap: "on",
+    dragAndDrop: false,
     readOnly
   };
 
@@ -23,10 +27,6 @@ const Editor = ({ contents, readOnly, language, setContents }: EditorOpts) => {
   useEffect(() => {
     setIsMobile(checkMobile(window.navigator).any);
   }, []);
-
-  const handleEditorChange = setContents
-    ? (_, value) => setContents(value)
-    : undefined;
 
   if (isMobile) {
     return (
@@ -42,7 +42,7 @@ const Editor = ({ contents, readOnly, language, setContents }: EditorOpts) => {
     <MonacoEditor 
       language={language}
       value={contents}
-      onChange={handleEditorChange}
+      onChange={setContents}
       theme="vs-dark"
       className="editor"
       options={editorOptions}

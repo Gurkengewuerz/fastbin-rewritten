@@ -49,64 +49,6 @@ Every URL is unlisted, but again, available for the public. Snippets are NOT
 encrypted (i.e. they're plaintext). If there's popular demand for snippet
 encryption, I'll make sure to include that.
 
-## Self Hosting
-
-### One-Click Deployment with Vercel
-
-You can deploy the app to your own [Vercel](https://vercel.com) account in just
-one click:
-
-<a href="https://vercel.com/new/project?template=jozsefsallai/fastbin-rewritten"><img width="128" src="https://vercel.com/button" alt="One-click Deployment" /></a>
-
-Once the project is created, you must specify the environment variables that are
-necessary for the storage strategies to work. This is the same as creating a
-.env file in the manual setup.
-
-### One-Click Deployment with Netlify
-
-fastbin will work nicely on [Netlify](https://www.netlify.com) as well. It's one
-click away:
-
-<a href="https://app.netlify.com/start/deploy?repository=https://github.com/jozsefsallai/fastbin-rewritten"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a>
-
-Don't forget to specify the environment variables for your Netlify project.
-
-### Manual Setup
-
-**1. Clone the repository**
-
-```
-git clone git@github.com:jozsefsallai/fastbin-rewritten.git fastbin
-cd fastbin
-```
-
-**2. Install the dependencies**
-
-```
-npm i -g yarn
-yarn
-```
-
-**3. Configure your fastbin server**
-
-```
-cp .env.example .env
-vim .env
-```
-
-**Start the server in development mode:**
-
-```
-yarn dev
-```
-
-**Create a production build:**
-
-```
-yarn build
-yarn start
-```
-
 ## Storage Strategies
 
 At the moment, fastbin can store snippets using three different strategies:
@@ -136,14 +78,6 @@ have a credentials JSON file yet, you can generate one in the settings of your
 Firebase projects.
 
 \*Make sure you only specify the bucket's name, WITHOUT ".appspot.com".
-
-## Contribution
-
-Contribution is more than welcome and appreciated! If you want to contribute,
-you can:
-
-- [file a bug report](https://github.com/jozsefsallai/fastbin-rewritten/issues/new)
-- [submit a pull request](https://github.com/jozsefsallai/fastbin-rewritten/pulls)
 
 ## License
 

@@ -57,7 +57,7 @@ const DeletePage = ({ secret, snippetKey }: DeletePageProps) => {
 
   return (
     <AppTemplate navigation={[]}>
-      <Modal open={true} disableBackdropClick={true}>
+      <Modal visible={true} disableBackdropClick={true}>
         <Modal.Title>Delete Snippet?</Modal.Title>
 
         <Modal.Content>

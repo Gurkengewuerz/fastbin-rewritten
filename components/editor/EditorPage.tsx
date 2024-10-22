@@ -24,9 +24,7 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
   };
 
   const [uploading, setUploading] = useState(false);
-
-  const documentContents = useRef(contents ?? '');
-  const setDocumentContents = (c: string) => documentContents.current = c;
+  const [documentContents, setDocumentContents] = useState(contents ?? '');
 
   const [toasts, setToast] = useToasts();
   const router = useRouter();
@@ -37,27 +35,32 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
     }
 
     setUploading(true);
-
     try {
-      const { key, secret } = await upload(documentContents.current, documentLanguageRef.current);
+      const { key, secret } = await upload(
+        documentContents,
+        documentLanguageRef.current,
+      );
 
       setToast({
         text: 'Snippet created successfully! Redirecting...',
-        type: 'success'
+        type: 'success',
       });
 
-      router.push({
-        pathname: `/${key}`,
-        query: {
-          secret
-        }
-      }, `/${key}`);
+      router.push(
+        {
+          pathname: `/${key}`,
+          query: {
+            secret,
+          },
+        },
+        `/${key}`,
+      );
     } catch (err) {
       setUploading(false);
 
       setToast({
         text: `${err}`,
-        type: 'error'
+        type: 'error',
       });
     }
   };
@@ -66,15 +69,15 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
     {
       onClick: save,
       tooltip: 'Save (ctrl+s)',
-      icon: Save
-    }
+      icon: Save,
+    },
   ];
 
   useEffect(() => {
     let mounted = true;
     globalKeyBind(Mousetrap);
 
-    (Mousetrap as any).bindGlobal('ctrl+s', e => {
+    (Mousetrap as any).bindGlobal('ctrl+s', (e) => {
       e.preventDefault();
       if (mounted) {
         save();
@@ -95,7 +98,7 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
       setDocumentLanguage={setDocumentLanguage}
     >
       <Editor
-        contents={documentContents.current}
+        contents={documentContents}
         setContents={setDocumentContents}
         language={documentLanguage}
       />
