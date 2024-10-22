@@ -1,5 +1,5 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { CssBaseline } from '@geist-ui/react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 class FastbinDocument extends Document {
   static async getInitialProps(ctx) {

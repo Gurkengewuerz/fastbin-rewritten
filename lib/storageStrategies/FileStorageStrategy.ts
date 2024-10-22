@@ -1,7 +1,9 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
-import env from '@/lib/env';
+import * as fs from 'fs-extra';
+
 import IStorageStrategy from './IStorageStrategy';
+
+import env from '@/lib/env';
 
 const STORAGE_ROOT = path.join(process.cwd(), env('file-storage.location') || 'storage');
 

@@ -1,5 +1,6 @@
-import { Text, Loading } from '@geist-ui/react';
 import css from './LoadingContainer.module.scss';
+
+import { Loading,Text } from '@geist-ui/react';
 
 const LoadingContainer = ({ text }: { text?: string }) => {
   return (

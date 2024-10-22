@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+
 import env from './env';
 
 class S3 {

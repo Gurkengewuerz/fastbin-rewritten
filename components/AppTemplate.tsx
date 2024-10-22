@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+
 import TheHeader, { NavigationItem } from './the-header/TheHeader';
 
 export interface AppTemplateProps {

@@ -1,14 +1,15 @@
-import AppTemplate from '@/components/AppTemplate';
-import { NavigationItem } from '@/components/the-header/TheHeader';
-import { Save } from '@geist-ui/react-icons';
-import Editor from '@/components/editor/Editor';
 import React, { useEffect, useRef, useState } from 'react';
-import upload from '@/lib/upload';
 import { useToasts } from '@geist-ui/react';
-import LoadingContainer from '@/components/loading-container/LoadingContainer';
+import { Save } from '@geist-ui/react-icons';
 import Mousetrap from 'mousetrap';
-import globalKeyBind from '@/lib/globalKeyBind';
 import { useRouter } from 'next/router';
+
+import AppTemplate from '@/components/AppTemplate';
+import Editor from '@/components/editor/Editor';
+import LoadingContainer from '@/components/loading-container/LoadingContainer';
+import { NavigationItem } from '@/components/the-header/TheHeader';
+import globalKeyBind from '@/lib/globalKeyBind';
+import upload from '@/lib/upload';
 
 interface EditorPageProps {
   contents?: string;
@@ -28,7 +29,7 @@ const EditorPage = ({ contents, languageId }: EditorPageProps) => {
   const documentContents = useRef(contents ?? '');
   const setDocumentContents = (c: string) => documentContents.current = c;
 
-  const [toasts, setToast] = useToasts();
+  const [_, setToast] = useToasts();
   const router = useRouter();
 
   const save = async () => {

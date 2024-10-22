@@ -57,7 +57,7 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@9.13.0":
+"@eslint/js@9.13.0", "@eslint/js@^9.13.0":
   version "9.13.0"
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.13.0.tgz#c5f89bcd57eb54d5d4fa8b77693e9c28dc97e547"
   integrity sha512-IFLyoY4d72Z5y/6o/BazFBezupzI/taV8sGumxTAVw3lXG9A6md1Dc34T9s1FoD/an9pJH8RHbAxsaEbBed9lA==
@@ -1673,7 +1673,7 @@ eslint-plugin-import@^2.31.0:
     string.prototype.trimend "^1.0.8"
     tsconfig-paths "^3.15.0"
 
-eslint-plugin-jsx-a11y@^6.10.0:
+eslint-plugin-jsx-a11y@^6.10.0, eslint-plugin-jsx-a11y@^6.10.1:
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jsx-a11y/-/eslint-plugin-jsx-a11y-6.10.1.tgz#87003835bad8875e023aa5db26f41a0c9e6a8fa9"
   integrity sha512-zHByM9WTUMnfsDTafGXRiqxp6lFtNoSOWBY6FonVRn3A+BUwN1L/tdBXT40BcBJi0cZjOGTXZ0eD/rTG9fEJ0g==
@@ -1723,6 +1723,11 @@ eslint-plugin-react@^7.35.0:
     semver "^6.3.1"
     string.prototype.matchall "^4.0.11"
     string.prototype.repeat "^1.0.0"
+
+eslint-plugin-simple-import-sort@^12.1.1:
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-simple-import-sort/-/eslint-plugin-simple-import-sort-12.1.1.tgz#e64bfdaf91c5b98a298619aa634a9f7aa43b709e"
+  integrity sha512-6nuzu4xwQtE3332Uz0to+TxDQYRLTKRESSc2hefVT48Zc8JthmN23Gx9lnYhu0FtkRSL1oxny3kJ2aveVhmOVA==
 
 eslint-scope@^8.1.0:
   version "8.1.0"
@@ -2099,6 +2104,11 @@ globals@^14.0.0:
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-14.0.0.tgz#898d7413c29babcf6bafe56fcadded858ada724e"
   integrity sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==
+
+globals@^15.11.0:
+  version "15.11.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-15.11.0.tgz#b96ed4c6998540c6fb824b24b5499216d2438d6e"
+  integrity sha512-yeyNSjdbyVaWurlwCpcA6XNBrHTMIeDdj0/hnvX/OLJ9ekOXYbLsLinH/MucQyGvNnXhidTdNhTtJaffL2sMfw==
 
 globalthis@^1.0.3, globalthis@^1.0.4:
   version "1.0.4"

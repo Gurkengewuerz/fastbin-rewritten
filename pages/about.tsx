@@ -1,8 +1,8 @@
+import * as path from 'path';
+import * as fs from 'fs-extra';
+
 import AppTemplate from '@/components/AppTemplate';
 import Editor from '@/components/editor/Editor';
-
-import * as fs from 'fs-extra';
-import * as path from 'path';
 
 const About = ({ readme }: { readme: string }) => {
   return (
@@ -12,8 +12,8 @@ const About = ({ readme }: { readme: string }) => {
   );
 };
 
-export async function getStaticProps(ctx) {
-  let readme = await fs.readFile(path.join(process.cwd(), 'README.md'), {
+export async function getStaticProps() {
+  const readme = await fs.readFile(path.join(process.cwd(), 'README.md'), {
     encoding: 'utf8',
   });
 

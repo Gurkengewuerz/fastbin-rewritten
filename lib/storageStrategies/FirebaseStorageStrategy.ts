@@ -1,5 +1,6 @@
-import Firebase from '@/lib/firebase';
 import IStorageStrategy from './IStorageStrategy';
+
+import Firebase from '@/lib/firebase';
 
 class FirebaseStorageStrategy implements IStorageStrategy {
   async create(params) {

@@ -1,36 +1,29 @@
-import env from '@/lib/env';
-import { getStorageStrategy } from '@/lib/storageStrategies';
+import cuid from 'cuid';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import cuid from 'cuid';
+import env from '@/lib/env';
 import { encrypt } from '@/lib/secrets';
+import { getStorageStrategy } from '@/lib/storageStrategies';
 
 const storage = getStorageStrategy();
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: env('limits.max-payload-size') || '10mb'
-    }
-  }
-};
-
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const route = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(405).json({
       ok: false,
-      error: 'Method not allowed.'
+      error: 'Method not allowed.',
     });
   }
 
-  const contents = typeof req.body === 'string'
-    ? req.body
-    : req.body && Object.keys(req.body)[0];
+  const contents =
+    typeof req.body === 'string'
+      ? req.body
+      : req.body && Object.keys(req.body)[0];
 
   if (!contents || !contents.length) {
     return res.status(422).json({
       ok: false,
-      error: 'Contents is too short.'
+      error: 'Contents is too short.',
     });
   }
 
@@ -39,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (contents.length > maxLength) {
     return res.status(422).json({
       ok: false,
-      error: `Your snippet needs to be less than ${maxLength} characters long.`
+      error: `Your snippet needs to be less than ${maxLength} characters long.`,
     });
   }
 
@@ -60,3 +53,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ ok: false });
   }
 };
+
+export default route;

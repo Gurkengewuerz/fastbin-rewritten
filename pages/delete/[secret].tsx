@@ -1,9 +1,9 @@
+import { useState } from 'react';
+import { Modal, useToasts } from '@geist-ui/react';
+import { useRouter } from 'next/router';
+
 import AppTemplate from '@/components/AppTemplate';
 import env from '@/lib/env';
-import { Modal, useToasts } from '@geist-ui/react';
-
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 interface DeletePageProps {
   secret: string;
@@ -11,10 +11,10 @@ interface DeletePageProps {
 }
 
 const DeletePage = ({ secret, snippetKey }: DeletePageProps) => {
-  const [ toasts, setToast ] = useToasts();
+  const [_, setToast] = useToasts();
   const router = useRouter();
 
-  const [ deleting, setDeleting ] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const handleCancelClick = () => router.push(`/${snippetKey}`);
 
@@ -26,9 +26,9 @@ const DeletePage = ({ secret, snippetKey }: DeletePageProps) => {
         method: 'DELETE',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        credentials: 'same-origin'
+        credentials: 'same-origin',
       });
 
       const json = await res.json();
@@ -40,7 +40,7 @@ const DeletePage = ({ secret, snippetKey }: DeletePageProps) => {
 
       setToast({
         text: `Snippet "${snippetKey}" deleted successfully!`,
-        type: 'success'
+        type: 'success',
       });
 
       setDeleting(false);
@@ -50,7 +50,7 @@ const DeletePage = ({ secret, snippetKey }: DeletePageProps) => {
 
       setToast({
         text: `${err}`,
-        type: 'error'
+        type: 'error',
       });
     }
   };
@@ -61,20 +61,24 @@ const DeletePage = ({ secret, snippetKey }: DeletePageProps) => {
         <Modal.Title>Delete Snippet?</Modal.Title>
 
         <Modal.Content>
-          Are you sure you want to delete the snippet <a href={`/${snippetKey}`} target="_blank">{snippetKey}</a>?
-          This action is irreversible.
+          Are you sure you want to delete the snippet{' '}
+          <a href={`/${snippetKey}`} target="_blank">
+            {snippetKey}
+          </a>
+          ? This action is irreversible.
         </Modal.Content>
 
-        <Modal.Action
-          passive
-          disabled={deleting}
-          onClick={handleCancelClick}
-        >No, keep it!</Modal.Action>
+        {/* 
+        // @ts-expect-error geist-ui/react not updated properly*/}
+        <Modal.Action passive disabled={deleting} onClick={handleCancelClick}>
+          No, keep it!
+        </Modal.Action>
 
-        <Modal.Action
-          disabled={deleting}
-          onClick={handleDeleteClick}
-        >Yes, delete it.</Modal.Action>
+        {/* 
+        // @ts-expect-error geist-ui/react not updated properly */}
+        <Modal.Action disabled={deleting} onClick={handleDeleteClick}>
+          Yes, delete it.
+        </Modal.Action>
       </Modal>
     </AppTemplate>
   );
@@ -89,16 +93,16 @@ export async function getServerSideProps({ params }) {
   const data = await fetch(`${baseUrl}/api/delete/${secret}`, {
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    credentials: 'same-origin'
+    credentials: 'same-origin',
   });
 
   const json = await data.json();
 
   if (!json.ok) {
     return {
-      notFound: true
+      notFound: true,
     };
   }
 
@@ -107,7 +111,7 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       snippetKey,
-      secret
-    }
+      secret,
+    },
   };
-};
+}

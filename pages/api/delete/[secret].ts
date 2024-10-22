@@ -5,11 +5,11 @@ import { getStorageStrategy } from '@/lib/storageStrategies';
 
 const storage = getStorageStrategy();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (![ 'GET', 'DELETE' ].includes(req.method)) {
+const route = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (!['GET', 'DELETE'].includes(req.method)) {
     return res.status(405).json({
       ok: false,
-      error: 'Method not allowed.'
+      error: 'Method not allowed.',
     });
   }
 
@@ -22,13 +22,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (!(await storage.exists(key))) {
         return res.status(404).json({
           ok: false,
-          error: 'Snippet not found!'
+          error: 'Snippet not found!',
         });
       }
 
       return res.json({
         ok: true,
-        key
+        key,
       });
     }
 
@@ -36,12 +36,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.json({
       ok: true,
-      key
+      key,
     });
-  } catch (err) {
+  } catch (_) {
     return res.status(400).json({
       ok: false,
-      error: 'Failed to decrypt secret. Snippet not deleted.'
+      error: 'Failed to decrypt secret. Snippet not deleted.',
     });
   }
 };
+
+export default route;

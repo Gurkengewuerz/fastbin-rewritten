@@ -1,13 +1,14 @@
-import AppTemplate from '@/components/AppTemplate';
-import { NavigationItem } from '@/components/the-header/TheHeader';
-import env from '@/lib/env';
-import languages from '@/lib/languages';
-import { Copy, Code, Trash2 } from '@geist-ui/react-icons';
-import Editor from '@/components/editor/Editor';
+import { useEffect } from 'react';
+import { Code, Copy, Trash2 } from '@geist-ui/react-icons';
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
+import AppTemplate from '@/components/AppTemplate';
+import Editor from '@/components/editor/Editor';
+import { NavigationItem } from '@/components/the-header/TheHeader';
+import env from '@/lib/env';
 import globalKeyBind from '@/lib/globalKeyBind';
+import languages from '@/lib/languages';
 
 interface DocumentPageProps {
   contents: string;
@@ -74,9 +75,9 @@ const DocumentPage = ({ contents, finalKey, originalKey, languageId, secret }: D
 
 export default DocumentPage;
 
-export async function getServerSideProps({ req, res, params, query }) {
+export async function getServerSideProps({ params, query }) {
   let key = params.key;
-  let originalKey = key;
+  const originalKey = key;
 
   let languageId = 'plain';
 

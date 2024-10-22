@@ -1,9 +1,9 @@
-import firebase from 'firebase-admin';
-import env from './env';
-
 import * as fs from 'fs';
 import * as path from 'path';
 import { Bucket } from '@google-cloud/storage';
+import firebase from 'firebase-admin';
+
+import env from './env';
 
 const getCredentials = () => {
   const serviceAccountFilepath = path.join(process.cwd(), '.firebase/credentials.json');

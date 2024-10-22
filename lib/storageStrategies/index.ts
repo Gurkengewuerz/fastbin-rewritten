@@ -1,8 +1,8 @@
-import env from '@/lib/env';
-
 import FileStorageStrategy from './FileStorageStrategy';
-import S3StorageStrategy from './S3StorageStrategy';
 import FirebaseStorageStrategy from './FirebaseStorageStrategy';
+import S3StorageStrategy from './S3StorageStrategy';
+
+import env from '@/lib/env';
 
 const getStorageStrategy = () => {
   const strategy = env('storage-strategy');

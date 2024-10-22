@@ -1,14 +1,13 @@
-import { GeistProvider, CssBaseline } from '@geist-ui/react';
 import '@/styles/base.scss';
 
 import { useEffect } from 'react';
+import { CssBaseline,GeistProvider } from '@geist-ui/react';
+import Mousetrap from 'mousetrap';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import Mousetrap from 'mousetrap';
-import globalKeyBind from '@/lib/globalKeyBind';
-
-import Head from 'next/head';
 import Umami from '@/components/Umami';
+import globalKeyBind from '@/lib/globalKeyBind';
 
 const Fastbin = ({ Component, pageProps }) => {
   const router = useRouter();

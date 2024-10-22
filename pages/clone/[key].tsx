@@ -1,6 +1,6 @@
+import EditorPage from '@/components/editor/EditorPage';
 import env from '@/lib/env';
 import languages from '@/lib/languages';
-import EditorPage from '@/components/editor/EditorPage';
 
 interface ClonePageProps {
   contents: string;

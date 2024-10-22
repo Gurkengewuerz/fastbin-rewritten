@@ -3,9 +3,7 @@ const globalKeyBind = instance => {
   const _originalStopCallback = instance.prototype.stopCallback;
 
   instance.prototype.stopCallback = function (e, element, combo, sequence) {
-    let self = this;
-
-    if (self.paused) {
+    if (this.paused) {
       return true;
     }
 
@@ -17,9 +15,8 @@ const globalKeyBind = instance => {
   };
 
   instance.prototype.bindGlobal = function (keys, callback, action) {
-    let self = this;
 
-    self.bind(keys, callback, action);
+    this.bind(keys, callback, action);
 
     if (keys instanceof Array) {
       for (let i = 0; i < keys.length; i++) {
@@ -32,8 +29,7 @@ const globalKeyBind = instance => {
   };
 
   instance.prototype.unbindGlobal = function (keys, action) {
-    let self = this;
-    self.unbind(keys, action);
+    this.unbind(keys, action);
 
     if (keys instanceof Array) {
       for (let i = 0; i < keys.length; i++) {

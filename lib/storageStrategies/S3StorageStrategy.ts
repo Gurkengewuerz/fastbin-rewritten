@@ -1,5 +1,6 @@
-import S3 from '@/lib/s3';
 import IStorageStrategy from './IStorageStrategy';
+
+import S3 from '@/lib/s3';
 
 class S3StorageStrategy implements IStorageStrategy {
   async create(params) {
