@@ -8,6 +8,7 @@ import Mousetrap from 'mousetrap';
 import globalKeyBind from '@/lib/globalKeyBind';
 
 import Head from 'next/head';
+import Umami from '@/components/Umami';
 
 const Fastbin = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const Fastbin = ({ Component, pageProps }) => {
     <GeistProvider theme={{ type: 'dark' }}>
       <CssBaseline />
       <Component {...pageProps} />
+      <Umami />
 
       <Head>
         <title>fastbin</title>
