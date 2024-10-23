@@ -1,9 +1,11 @@
 import React from 'react';
 import Script from 'next/script';
 
+import env from '@/lib/env';
+
 const Umami = () => {
-  const scriptUrl = process.env.NEXT_PUBLIC_UMAMI_SCRIPT ?? "https://analytics.umami.is/script.js";
-  const websiteID = process.env.NEXT_PUBLIC_UMAMI_ID;
+  const scriptUrl = env('umami-script', true) ?? 'https://analytics.umami.is/script.js';
+  const websiteID = env('umami-id', true);
 
   if (!websiteID) return <></>;
 
