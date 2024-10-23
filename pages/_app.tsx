@@ -35,6 +35,8 @@ const Fastbin = ({ Component, pageProps }) => {
 
         <meta name="title" content="fastbin" />
         <meta name="description" content="free, fast, and easy pastebin service" />
+
+        <link rel="icon" type="image/x-icon" href="/logo.svg" />
       </Head>
     </GeistProvider>
   );

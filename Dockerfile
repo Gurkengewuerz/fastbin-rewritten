@@ -30,6 +30,7 @@ RUN apk add --no-cache yarn
 
 # Copy necessary files from builder
 COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
@@ -39,6 +40,7 @@ EXPOSE 3000
 # Set environment variables
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 
 # Command to run the application
